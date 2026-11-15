@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BREWSTER - Sign Up</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+            background:
+                linear-gradient(rgba(35, 13, 8, 0.78), rgba(35, 13, 8, 0.78)),
+                url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .signup-box {
+            width: 430px;
+            padding: 38px 40px;
+            background: rgba(255, 248, 240, 0.96);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            animation: appear 0.8s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #4b2612;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 20px rgba(75, 38, 18, 0.35);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4b2612;
+            font-family: Georgia, serif;
+            font-size: 30px;
+            letter-spacing: 2px;
+            margin-bottom: 7px;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #956b50;
+            font-size: 14px;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #6b3519;
+            font-size: 23px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            color: #4b2612;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding: 10px 14px 10px 43px;
+            border: 1.5px solid #d3b7a1;
+            border-radius: 10px;
+            outline: none;
+            background: #fffdfb;
+            color: #4b2612;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #b59a88;
+        }
+
+        input:focus {
+            border-color: #8b4513;
+            box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.1);
+            background: white;
+        }
+
+        button {
+            width: 100%;
+            height: 50px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4b2612, #8b4513);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 18px rgba(75, 38, 18, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(75, 38, 18, 0.4);
+            background: linear-gradient(135deg, #6b3519, #a05218);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        p {
+            text-align: center;
+            color: #76533f;
+            font-size: 14px;
+            margin-top: 23px;
+        }
+
+        a {
+            color: #8b4513;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 4px;
+        }
+
+        a:hover {
+            color: #4b2612;
+            text-decoration: underline;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #a78b78;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .signup-box {
+                width: 100%;
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="signup-box">
+
+        <div class="logo">☕</div>
+
+        <h1>THE BREWSTER</h1>
+
+        <div class="tagline">
+            Brew • Relax • Enjoy
+        </div>
+
+        <h2>Create Your Account</h2>
+
+        <form action="{{ url_for('signup') }}" method="POST">
+
+            <div class="input-group">
+                <label>Name</label>
+
+                <div class="input-box">
+                    <span class="input-icon">👤</span>
+                    <input type="text"
+                           name="name"
+                           placeholder="Enter your name"
+                           required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+
+                <div class="input-box">
+                    <span class="input-icon">✉️</span>
+                    <input type="email"
+                           name="email"
+                           placeholder="Enter your email"
+                           required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+
+                <div class="input-box">
+                    <span class="input-icon">🔒</span>
+                    <input type="password"
+                           name="password"
+                           placeholder="Create a password"
+                           required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+
+                <div class="input-box">
+                    <span class="input-icon">🔐</span>
+                    <input type="password"
+                           name="confirm_password"
+                           placeholder="Confirm your password"
+                           required>
+                </div>
+            </div>
+
+            <button type="submit">
+                Create Account ☕
+            </button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="{{ url_for('login_page') }}">Login</a>
+        </p>
+
+        <div class="bottom-text">
+            Welcome to THE BREWSTER
+        </div>
+
+    </div>
+
+</body>
+
+</html>

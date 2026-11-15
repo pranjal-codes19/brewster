@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BREWSTER - Cart</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(35, 12, 8, 0.82), rgba(35, 12, 8, 0.9)),
+                url("{{ url_for('static', filename='mainimage.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #4b2612;
+        }
+
+        .navbar {
+            min-height: 75px;
+            background: rgba(55, 20, 15, 0.97);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 7%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-section img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-section h2 {
+            margin: 0;
+            color: #fff8f0;
+            font-size: 22px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff8f0;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #f5c27a;
+        }
+
+        .cart-link {
+            background: #8b2e2e;
+            padding: 9px 15px;
+            border-radius: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            padding: 45px 20px 25px;
+            color: white;
+        }
+
+        .page-title span {
+            color: #f5c27a;
+            font-size: 15px;
+            letter-spacing: 4px;
+        }
+
+        .page-title h1 {
+            margin: 10px 0;
+            font-size: 42px;
+        }
+
+        .page-title p {
+            color: #f4ddd0;
+            font-size: 16px;
+        }
+
+        .cart-box {
+            width: 90%;
+            max-width: 850px;
+            margin: 10px auto 50px;
+            background: rgba(255, 248, 240, 0.97);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(245, 194, 122, 0.5);
+        }
+
+        .cart-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e4c8ad;
+            padding-bottom: 18px;
+        }
+
+        .cart-heading h2 {
+            margin: 0;
+            color: #5a2d0c;
+            font-size: 25px;
+        }
+
+        .cart-heading span {
+            background: #f3dfc8;
+            color: #7b3f00;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 5px;
+            border-bottom: 1px solid #ead8c7;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-icon {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #5a2d0c, #8b4513);
+            color: #fff8f0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .item-info h3 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            color: #4b2612;
+        }
+
+        .item-info p {
+            margin: 0;
+            color: #8b6a55;
+            font-size: 14px;
+        }
+
+        .item-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .item-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8b2e2e;
+            white-space: nowrap;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #f3d5d0;
+            color: #8b2e2e;
+            padding: 8px 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .remove-btn:hover {
+            background: #8b2e2e;
+            color: white;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .empty-cart .icon {
+            font-size: 55px;
+        }
+
+        .empty-cart h2 {
+            color: #5a2d0c;
+        }
+
+        .empty-cart p {
+            color: #8b6a55;
+            margin-bottom: 25px;
+        }
+
+        .total-box {
+            margin-top: 25px;
+            background: linear-gradient(135deg, #f3dfc8, #fff0df);
+            border-radius: 18px;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e1c09e;
+        }
+
+        .total-box span {
+            color: #6b4228;
+            font-size: 18px;
+        }
+
+        #total {
+            margin: 0;
+            color: #7b241c;
+            font-size: 28px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .cart-button {
+            flex: 1;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            background: #4b2612;
+            color: white;
+        }
+
+        .payment-button {
+            background: linear-gradient(135deg, #8b2e2e, #b4473d);
+            color: white;
+        }
+
+        .back-button:hover,
+        .payment-button:hover {
+            opacity: 0.88;
+        }
+
+        .cart-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        footer {
+            text-align: center;
+            color: #f4ddd0;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            .navbar {
+                padding: 12px 4%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.cart-link) {
+                display: none;
+            }
+
+            .page-title h1 {
+                font-size: 34px;
+            }
+
+            .cart-box {
+                width: 94%;
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .logo-section h2 {
+                font-size: 17px;
+            }
+
+            .logo-section img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .page-title h1 {
+                font-size: 30px;
+            }
+
+            .cart-heading h2 {
+                font-size: 21px;
+            }
+
+            .cart-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .item-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .total-box {
+                padding: 18px;
+            }
+
+            #total {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo-section">
+            <img src="{{ url_for('static', filename='ChatGPT Image Oct 3, 2026, 07_55_35 PM.png') }}" alt="THE BREWSTER Logo">
+            <h2>THE BREWSTER</h2>
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home_page') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('gallery') }}">Gallery</a>
+            <a href="{{ url_for('cart') }}" class="cart-link">🛒 Cart</a>
+        </div>
+    </nav>
+
+    <section class="page-title">
+        <span>BREW • RELAX • ENJOY</span>
+        <h1>🛒 Your Cart</h1>
+        <p>Review your delicious choices before placing your order.</p>
+    </section>
+
+    <div class="cart-box">
+
+        <div class="cart-heading">
+            <h2>Order Summary</h2>
+            <span>☕ THE BREWSTER</span>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="total-box">
+            <span>Grand Total</span>
+            <h2 id="total">₹0.00</h2>
+        </div>
+
+        <div class="buttons">
+            <a href="{{ url_for('menu') }}" class="cart-button back-button">
+                ← Back to Menu
+            </a>
+
+            <button type="button" id="checkoutBtn"
+                class="cart-button payment-button"
+                onclick="goToPayment()">
+                Proceed to Payment →
+            </button>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 THE BREWSTER • Freshly Brewed, Made With Love ❤️
+    </footer>
+
+    <script>
+        let cart = [];
+
+        try {
+            cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (!Array.isArray(cart)) {
+                cart = [];
+            }
+        } catch (error) {
+            cart = [];
+        }
+
+        function displayCart() {
+            const container = document.getElementById("cartItems");
+            const totalElement = document.getElementById("total");
+            const checkoutBtn = document.getElementById("checkoutBtn");
+
+            container.innerHTML = "";
+
+            let total = 0;
+
+            const validCart = cart.filter(function(item) {
+                return item &&
+                    typeof item.name === "string" &&
+                    item.name.trim() !== "" &&
+                    Number.isFinite(Number(item.price)) &&
+                    Number(item.price) >= 0;
+            });
+
+            cart = validCart;
+
+            if (cart.length === 0) {
+                const emptyBox = document.createElement("div");
+                emptyBox.className = "empty-cart";
+
+                const icon = document.createElement("div");
+                icon.className = "icon";
+                icon.textContent = "🛒";
+
+                const heading = document.createElement("h2");
+                heading.textContent = "Your Cart is Empty";
+
+                const message = document.createElement("p");
+                message.textContent =
+                    "Add some delicious food and drinks from our menu.";
+
+                const menuLink = document.createElement("a");
+                menuLink.href = "{{ url_for('menu') }}";
+                menuLink.className = "cart-button payment-button";
+                menuLink.textContent = "Explore Menu ☕";
+
+                emptyBox.appendChild(icon);
+                emptyBox.appendChild(heading);
+                emptyBox.appendChild(message);
+                emptyBox.appendChild(menuLink);
+
+                container.appendChild(emptyBox);
+
+                checkoutBtn.disabled = true;
+            } else {
+                checkoutBtn.disabled = false;
+
+                cart.forEach(function(item, index) {
+                    const price = Number(item.price);
+
+                    total += price;
+
+                    const itemBox = document.createElement("div");
+                    itemBox.className = "cart-item";
+
+                    const itemInfo = document.createElement("div");
+                    itemInfo.className = "item-info";
+
+                    const itemIcon = document.createElement("div");
+                    itemIcon.className = "item-icon";
+                    itemIcon.textContent = "☕";
+
+                    const details = document.createElement("div");
+
+                    const itemName = document.createElement("h3");
+                    itemName.textContent = item.name;
+
+                    const description = document.createElement("p");
+                    description.textContent =
+                        "Freshly prepared by THE BREWSTER";
+
+                    details.appendChild(itemName);
+                    details.appendChild(description);
+
+                    itemInfo.appendChild(itemIcon);
+                    itemInfo.appendChild(details);
+
+                    const itemRight = document.createElement("div");
+                    itemRight.className = "item-right";
+
+                    const itemPrice = document.createElement("div");
+                    itemPrice.className = "item-price";
+                    itemPrice.textContent = "₹" + price.toFixed(2);
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.type = "button";
+                    removeBtn.className = "remove-btn";
+                    removeBtn.textContent = "Remove";
+
+                    removeBtn.addEventListener("click", function() {
+                        cart.splice(index, 1);
+
+                        localStorage.setItem(
+                            "cart",
+                            JSON.stringify(cart)
+                        );
+
+                        displayCart();
+                    });
+
+                    itemRight.appendChild(itemPrice);
+                    itemRight.appendChild(removeBtn);
+
+                    itemBox.appendChild(itemInfo);
+                    itemBox.appendChild(itemRight);
+
+                    container.appendChild(itemBox);
+                });
+            }
+
+            totalElement.textContent = "₹" + total.toFixed(2);
+
+            localStorage.setItem("total", total.toFixed(2));
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+        function goToPayment() {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Please add items first.");
+                return;
+            }
+
+            window.location.href = "{{ url_for('payment') }}";
+        }
+
+        displayCart();
+    </script>
+
+</body>
+</html>

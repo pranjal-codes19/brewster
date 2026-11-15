@@ -1,0 +1,416 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE BREWSTER - Payment</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px 15px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                linear-gradient(
+                    rgba(40, 14, 9, 0.88),
+                    rgba(40, 14, 9, 0.94)
+                ),
+                url("{{ url_for('static', filename='mainimage.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .payment-box {
+            width: 100%;
+            max-width: 520px;
+            background: #fffaf4;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            animation: appear 0.7s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, #4b1e16, #752828);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 4px solid #e5b878;
+        }
+
+        .coffee-icon {
+            width: 75px;
+            height: 75px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(245, 194, 122, 0.7);
+            font-size: 38px;
+        }
+
+        .payment-header h1 {
+            margin: 15px 0 5px;
+            font-size: 28px;
+            letter-spacing: 3px;
+        }
+
+        .payment-header p {
+            margin: 0;
+            color: #f5c27a;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .payment-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .payment-content h2 {
+            color: #5a2d0c;
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .instruction {
+            color: #8b6a55;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .amount {
+            background: linear-gradient(135deg, #f3dfc8, #fff0df);
+            border: 1px solid #e2c19e;
+            color: #752828;
+            padding: 17px;
+            border-radius: 15px;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .qr-container {
+            width: 285px;
+            height: 285px;
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 17px;
+            background: white;
+            border-radius: 18px;
+            border: 2px solid #e1c2a1;
+            box-shadow: 0 8px 25px rgba(75, 38, 18, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .scan-text {
+            color: #4b2612;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 18px 0 5px;
+        }
+
+        .upi-text {
+            color: #9a7a63;
+            font-size: 13px;
+            margin: 0 0 22px;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px 10px;
+            border-radius: 11px;
+            border: none;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cart-btn {
+            background: #4b2612;
+            color: white;
+        }
+
+        .cart-btn:hover {
+            background: #70401f;
+            transform: translateY(-2px);
+        }
+
+        .bill-btn {
+            background: linear-gradient(135deg, #8b2e2e, #b4473d);
+            color: white;
+            box-shadow: 0 7px 18px rgba(139, 46, 46, 0.25);
+        }
+
+        .bill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(139, 46, 46, 0.35);
+        }
+
+        .bill-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #paymentMessage {
+            color: #752828;
+            font-size: 14px;
+            margin-top: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .note {
+            margin-top: 22px;
+            padding: 12px;
+            background: #fff4e8;
+            border-radius: 10px;
+            color: #8b6a55;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            background: #f3e2d0;
+            padding: 14px;
+            text-align: center;
+            color: #795238;
+            font-size: 12px;
+        }
+
+        @media (max-width: 550px) {
+            .payment-content {
+                padding: 25px 18px;
+            }
+
+            .payment-header h1 {
+                font-size: 24px;
+            }
+
+            .qr-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .amount {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="payment-box">
+
+        <div class="payment-header">
+            <div class="coffee-icon">☕</div>
+            <h1>THE BREWSTER</h1>
+            <p>BREW • RELAX • ENJOY</p>
+        </div>
+
+        <div class="payment-content">
+
+            <h2>Scan & Pay</h2>
+
+            <p class="instruction">
+                Complete your payment using UPI
+            </p>
+
+            <div class="amount" id="paymentTotal">
+                Total: ₹0.00
+            </div>
+
+            <div class="qr-container">
+                <img
+                    src="{{ url_for('static', filename='WhatsApp Image 2026-10-04 at 12.32.51 AM.jpeg') }}"
+                    class="qr"
+                    alt="THE BREWSTER UPI QR Code"
+                >
+            </div>
+
+            <p class="scan-text">📱 Scan the QR Code</p>
+
+            <p class="upi-text">
+                Open your UPI app and scan the QR code
+                <br>
+                to complete your payment.
+            </p>
+
+            <div class="buttons">
+
+                <a href="{{ url_for('cart') }}" class="btn cart-btn">
+                    ← Back to Cart
+                </a>
+
+                <button
+                    type="button"
+                    id="confirmPayment"
+                    class="btn bill-btn"
+                >
+                    I Have Paid — Place Order
+                </button>
+
+            </div>
+
+            <p id="paymentMessage" role="status"></p>
+
+            <div class="note">
+                🔒 Please make sure the payment amount matches
+                the total shown above. Your order will be saved
+                with payment status Pending until payment is verified.
+            </div>
+
+        </div>
+
+        <div class="footer">
+            © 2026 THE BREWSTER • Freshly Brewed, Made With Love ❤️
+        </div>
+
+    </div>
+
+    <script>
+        function getCart() {
+            for (const key of ["cart", "cartItems", "cart_items"]) {
+                try {
+                    const saved = JSON.parse(localStorage.getItem(key));
+
+                    if (Array.isArray(saved) && saved.length > 0) {
+                        return saved;
+                    }
+                } catch (error) {
+                }
+            }
+
+            return [];
+        }
+
+        function getItemQuantity(item) {
+            const quantity = Number(item.quantity ?? 1);
+            return Number.isInteger(quantity) && quantity > 0
+                ? quantity
+                : 1;
+        }
+
+        const cart = getCart();
+
+        const totalAmount = cart.reduce((sum, item) => {
+            const price = Number(item.price);
+            return sum + (Number.isFinite(price) ? price * getItemQuantity(item) : 0);
+        }, 0);
+
+        document.getElementById("paymentTotal").innerText =
+            "Total: ₹" + totalAmount.toFixed(2);
+
+        document.getElementById("confirmPayment").addEventListener("click", async function () {
+            const button = this;
+            const message = document.getElementById("paymentMessage");
+            const currentCart = getCart();
+
+            if (currentCart.length === 0) {
+                message.innerText =
+                    "Your cart is empty. Please add items before placing an order.";
+                return;
+            }
+
+            const items = currentCart.map(item => ({
+                name: item.name,
+                price: Number(item.price),
+                quantity: getItemQuantity(item)
+            }));
+
+            if (items.some(item =>
+                !item.name ||
+                !Number.isFinite(item.price) ||
+                item.price <= 0
+            )) {
+                message.innerText =
+                    "Cart items are invalid. Please return to your cart and try again.";
+                return;
+            }
+
+            button.disabled = true;
+            message.innerText = "Saving your order...";
+
+            try {
+                const response = await fetch("/place-order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        items: items,
+                        payment_method: "UPI"
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.message || "Unable to save your order."
+                    );
+                }
+
+                ["cart", "cartItems", "cart_items", "total"].forEach(key => {
+                    localStorage.removeItem(key);
+                });
+
+                window.location.href = result.redirect || "/thankyou";
+
+            } catch (error) {
+                message.innerText = error.message;
+                button.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
+```

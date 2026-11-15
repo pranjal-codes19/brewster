@@ -1,0 +1,395 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE BREWSTER - Bill</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 35px 15px;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(40, 14, 9, 0.88), rgba(40, 14, 9, 0.92)),
+                url("{{ url_for('static', filename='mainimage.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .bill-box {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: #fffaf4;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .bill-header {
+            text-align: center;
+            background: linear-gradient(135deg, #4b1e16, #752828);
+            color: #fff8f0;
+            padding: 30px 20px;
+            border-bottom: 4px solid #e5b878;
+        }
+
+        .coffee-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .bill-header h1 {
+            margin: 0;
+            font-size: 29px;
+            letter-spacing: 3px;
+        }
+
+        .bill-header p {
+            color: #f5c27a;
+            margin: 10px 0 0;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .bill-content {
+            padding: 30px;
+        }
+
+        .order-title {
+            text-align: center;
+            color: #5a2d0c;
+            margin: 0 0 8px;
+            font-size: 26px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #9a7a63;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .bill-labels {
+            display: flex;
+            justify-content: space-between;
+            color: #8b4513;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 12px 0;
+            border-bottom: 2px solid #d6b08c;
+            text-transform: uppercase;
+        }
+
+        #billItems {
+            margin-top: 5px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px dashed #dfc7b1;
+            color: #4b2612;
+            font-size: 15px;
+        }
+
+        .item span:last-child {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .empty {
+            text-align: center;
+            color: #8b6a55;
+            padding: 25px 0;
+        }
+
+        .total-section {
+            margin-top: 25px;
+            background: #f7e8d7;
+            border: 1px solid #e5c7a8;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .total-row span {
+            font-size: 17px;
+            color: #5a2d0c;
+            font-weight: bold;
+        }
+
+        #total {
+            margin: 0;
+            color: #8b2e2e;
+            font-size: 28px;
+            text-align: right;
+        }
+
+        .paid {
+            text-align: center;
+            background: #e3f5e6;
+            color: #216b35;
+            border: 1px solid #b9dfc0;
+            padding: 14px;
+            border-radius: 12px;
+            margin-top: 22px;
+            font-weight: bold;
+        }
+
+        .paid span {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        .thank-note {
+            text-align: center;
+            color: #8b6a55;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 22px 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .print-btn {
+            background: #4b2612;
+            color: white;
+        }
+
+        .print-btn:hover {
+            background: #70401f;
+            transform: translateY(-2px);
+        }
+
+        .done-btn {
+            background: linear-gradient(135deg, #8b2e2e, #b4473d);
+            color: white;
+        }
+
+        .done-btn:hover {
+            background: #752828;
+            transform: translateY(-2px);
+        }
+
+        .bill-footer {
+            background: #f3e2d0;
+            text-align: center;
+            color: #795238;
+            font-size: 12px;
+            padding: 15px;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 20px 10px;
+            }
+
+            .bill-content {
+                padding: 22px 18px;
+            }
+
+            .bill-header h1 {
+                font-size: 24px;
+            }
+
+            .order-title {
+                font-size: 23px;
+            }
+
+            #total {
+                font-size: 23px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+        @media print {
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .bill-box {
+                max-width: 100%;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .buttons {
+                display: none;
+            }
+
+            .bill-footer {
+                background: white;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bill-box">
+
+        <div class="bill-header">
+
+            <div class="coffee-icon">☕</div>
+
+            <h1>THE BREWSTER</h1>
+
+            <p>BREW • RELAX • ENJOY</p>
+
+        </div>
+
+
+        <div class="bill-content">
+
+            <h2 class="order-title">Order Bill</h2>
+
+            <div class="subtitle">
+                Thank you for choosing THE BREWSTER!
+            </div>
+
+
+            <div class="bill-labels">
+                <span>Item Description</span>
+                <span>Price</span>
+            </div>
+
+
+            <div id="billItems"></div>
+
+
+            <div class="total-section">
+
+                <div class="total-row">
+
+                    <span>Grand Total</span>
+
+                    <h2 id="total">₹0</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="paid">
+                ✓ Payment Successful
+                <span>Your payment has been completed.</span>
+            </div>
+
+
+            <div class="thank-note">
+                We appreciate your order.
+                <br>
+                Freshly prepared with love, just for you ❤️
+            </div>
+
+
+            <div class="buttons">
+
+                <button class="print-btn" onclick="window.print()">
+                    🖨 Print Bill
+                </button>
+
+                <button class="done-btn" onclick="window.location.href='{{ url_for('thankyou') }}'">
+                    Done ✓
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="bill-footer">
+            © 2026 THE BREWSTER • Freshly Brewed, Made With Love
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        let billItems = document.getElementById("billItems");
+
+        let total = 0;
+
+        if (cart.length === 0) {
+
+            billItems.innerHTML = `
+                <div class="empty">
+                    No items found in your order.
+                </div>
+            `;
+
+        } else {
+
+            for (let i = 0; i < cart.length; i++) {
+
+                billItems.innerHTML +=
+                    "<div class='item'>" +
+                    "<span>" + cart[i].name + "</span>" +
+                    "<span>₹" + Number(cart[i].price) + "</span>" +
+                    "</div>";
+
+                total = total + Number(cart[i].price);
+
+            }
+
+        }
+
+        document.getElementById("total").innerText = "₹" + total;
+
+    </script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE BREWSTER - Menu</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f8eee3;
+            color: #4b2612;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            width: 100%;
+            min-height: 75px;
+
+            background: rgba(75, 38, 18, 0.98);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 10px 35px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand img {
+            width: 52px;
+            height: 52px;
+
+            object-fit: cover;
+            border-radius: 50%;
+
+            border: 2px solid #f5c27a;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-name {
+            color: white;
+
+            font-family: Georgia, serif;
+
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* NAV LINKS */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            padding: 9px 12px;
+
+            border-radius: 7px;
+
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f5c27a;
+            background: rgba(255, 255, 255, 0.1);
+
+            transform: translateY(-2px);
+        }
+
+        .cart-link img {
+            width: 38px;
+            height: 38px;
+
+            object-fit: contain;
+
+            transition: 0.3s;
+        }
+
+        .cart-link img:hover {
+            transform: scale(1.15);
+        }
+
+
+        /* PAGE HEADER */
+
+        .menu-header {
+            position: relative;
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    rgba(50, 20, 8, 0.82),
+                    rgba(50, 20, 8, 0.82)
+                ),
+                url("{{ url_for('static', filename='mainimage.png') }}");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .menu-header span {
+            color: #f5c27a;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            letter-spacing: 4px;
+        }
+
+        .menu-header h1 {
+            color: white;
+
+            font-family: Georgia, serif;
+
+            font-size: 48px;
+
+            margin: 10px 0;
+        }
+
+        .menu-header p {
+            color: #f8dfc8;
+
+            font-size: 17px;
+        }
+
+
+        /* CATEGORIES */
+
+        .categories {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            padding: 30px 20px 20px;
+        }
+
+        .categories button {
+            color: #5a2d1a;
+
+            border: 1.5px solid #a05218;
+
+            padding: 10px 20px;
+
+            background: #fffaf5;
+
+            border-radius: 25px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .categories button:hover {
+            background: #8b4513;
+            color: white;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 7px 15px rgba(75, 38, 18, 0.2);
+        }
+
+
+        /* MENU */
+
+        .menu-container {
+            max-width: 1400px;
+
+            margin: auto;
+
+            padding: 25px 35px 70px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 25px;
+        }
+
+
+        /* FOOD CARD */
+
+        .food-card {
+            position: relative;
+
+            padding: 12px;
+
+            border-radius: 18px;
+
+            background: rgba(255, 250, 245, 0.95);
+
+            border: 1px solid #e5cdb9;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 20px rgba(75, 38, 18, 0.12);
+
+            overflow: hidden;
+
+            transition: 0.35s;
+        }
+
+        .food-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #6b3519,
+                    #d28a4b,
+                    #6b3519
+                );
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 18px 35px rgba(75, 38, 18, 0.2);
+
+            border-color: #b8794d;
+        }
+
+        .food-card img {
+            width: 100%;
+            height: 170px;
+
+            object-fit: cover;
+
+            border-radius: 13px;
+
+            margin-top: 3px;
+
+            transition: 0.4s;
+        }
+
+        .food-card:hover img {
+            transform: scale(1.04);
+        }
+
+        .food-card h2 {
+            color: #4b2612;
+
+            font-family: Georgia, serif;
+
+            font-size: 20px;
+
+            margin: 15px 5px 7px;
+        }
+
+        .food-card p {
+            color: #76533f;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            min-height: 38px;
+
+            margin: 0 5px 8px;
+        }
+
+        .food-card h3 {
+            color: #8b4513;
+
+            font-size: 20px;
+
+            margin: 8px 0 13px;
+        }
+
+
+        /* ADD TO CART */
+
+        .food-card button {
+            width: 100%;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4b2612,
+                    #8b4513
+                );
+
+            border: none;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .food-card button:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b4513,
+                    #b86525
+                );
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 15px rgba(75, 38, 18, 0.3);
+        }
+
+        .food-card button:active {
+            transform: scale(0.97);
+        }
+
+
+        /* FOOTER */
+
+        .menu-footer {
+            background: #4b2612;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 35px 20px;
+        }
+
+        .menu-footer h2 {
+            font-family: Georgia, serif;
+
+            margin-bottom: 8px;
+        }
+
+        .menu-footer p {
+            color: #ead2bd;
+
+            font-size: 14px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1200px) {
+
+            .menu-container {
+                grid-template-columns:
+                    repeat(4, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                flex-direction: column;
+
+                gap: 12px;
+
+                padding: 13px;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .menu-container {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                padding: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .brand-name {
+                font-size: 20px;
+            }
+
+            .brand img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .nav-links {
+                gap: 2px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+                padding: 6px 5px;
+            }
+
+            .menu-header {
+                padding: 50px 15px;
+            }
+
+            .menu-header h1 {
+                font-size: 36px;
+            }
+
+            .menu-header p {
+                font-size: 14px;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr;
+
+                padding: 15px;
+            }
+
+            .food-card img {
+                height: 200px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <img
+                src="{{ url_for('static', filename='ChatGPT Image Oct 3, 2026, 07_55_35 PM.png') }}"
+                alt="The Brewster Logo"
+            >
+
+            <span class="brand-name">
+                THE BREWSTER
+            </span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('home_page') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('menu') }}">
+                Menu
+            </a>
+
+            <a href="{{ url_for('gallery') }}">
+                Gallery
+            </a>
+
+            <a href="{{ url_for('cart') }}">
+                Contact
+            </a>
+
+            <a href="{{ url_for('cart') }}" class="cart-link">
+
+                <img
+                    src="{{ url_for('static', filename='cart1.webp') }}"
+                    alt="Cart"
+                >
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MENU HEADER -->
+
+    <section class="menu-header">
+
+        <span>
+            FRESH • DELICIOUS • MADE WITH LOVE
+        </span>
+
+        <h1>
+            Our Menu
+        </h1>
+
+        <p>
+            Discover something delicious at THE BREWSTER
+        </p>
+
+    </section>
+
+
+    <!-- CATEGORY FILTER -->
+
+    <div class="categories">
+
+        <button onclick="filterMenu('all')">
+            All
+        </button>
+
+        <button onclick="filterMenu('coffee')">
+            ☕ Coffee
+        </button>
+
+        <button onclick="filterMenu('burger')">
+            🍔 Burgers
+        </button>
+
+        <button onclick="filterMenu('pizza')">
+            🍕 Pizza
+        </button>
+
+        <button onclick="filterMenu('snack')">
+            🍟 Snacks
+        </button>
+
+        <button onclick="filterMenu('dessert')">
+            🍰 Desserts
+        </button>
+
+    </div>
+
+
+    <!-- MENU ITEMS -->
+
+    <div class="menu-container">
+
+
+        <!-- COFFEE -->
+
+        <div class="food-card coffee">
+
+            <img src="{{ url_for('static', filename='cappiccino.webp') }}">
+
+            <h2>Cappuccino</h2>
+
+            <p>Rich and creamy coffee</p>
+
+            <h3>₹120</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card coffee">
+
+            <img src="{{ url_for('static', filename='latte.jpg') }}">
+
+            <h2>Latte</h2>
+
+            <p>Smooth and creamy milk coffee</p>
+
+            <h3>₹130</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card coffee">
+
+            <img src="{{ url_for('static', filename='americano-1024x576.webp') }}">
+
+            <h2>Americano</h2>
+
+            <p>Smooth and creamy coffee</p>
+
+            <h3>₹230</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card coffee">
+
+            <img src="{{ url_for('static', filename='macchato.avif') }}">
+
+            <h2>Macchiato</h2>
+
+            <p>Strong and delicious coffee</p>
+
+            <h3>₹250</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card coffee">
+
+            <img src="{{ url_for('static', filename='flat.jpg') }}">
+
+            <h2>Flat White</h2>
+
+            <p>Smooth and creamy coffee</p>
+
+            <h3>₹300</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <!-- BURGERS -->
+
+        <div class="food-card burger">
+
+            <img src="{{ url_for('static', filename='burger1.jpg') }}">
+
+            <h2>Cheese Burger</h2>
+
+            <p>Juicy burger with fresh cheese</p>
+
+            <h3>₹180</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card burger">
+
+            <img src="{{ url_for('static', filename='burger2.jpg') }}">
+
+            <h2>Bacon Cheeseburger</h2>
+
+            <p>Juicy burger with fresh cheese</p>
+
+            <h3>₹280</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card burger">
+
+            <img src="{{ url_for('static', filename='burger3.webp') }}">
+
+            <h2>BBQ Burger</h2>
+
+            <p>Juicy burger with BBQ flavour</p>
+
+            <h3>₹430</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card burger">
+
+            <img src="{{ url_for('static', filename='burger4.jpg') }}">
+
+            <h2>Spicy Jalapeno</h2>
+
+            <p>Spicy and delicious burger</p>
+
+            <h3>₹510</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card burger">
+
+            <img src="{{ url_for('static', filename='burger5.jpg') }}">
+
+            <h2>Spicy Hawaiian</h2>
+
+            <p>Juicy and spicy burger</p>
+
+            <h3>₹310</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <!-- PIZZA -->
+
+        <div class="food-card pizza">
+
+            <img src="{{ url_for('static', filename='pizza1.jpg') }}">
+
+            <h2>Margherita Pizza</h2>
+
+            <p>Fresh tomato and cheese pizza</p>
+
+            <h3>₹220</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card pizza">
+
+            <img src="{{ url_for('static', filename='pizza2.jpg') }}">
+
+            <h2>Super Veg Delight Pizza</h2>
+
+            <p>Fresh cut veggies and cheese</p>
+
+            <h3>₹277</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card pizza">
+
+            <img src="{{ url_for('static', filename='pizza3.jpg') }}">
+
+            <h2>Paneer Makhani Pizza</h2>
+
+            <p>Paneer with delicious makhani sauce</p>
+
+            <h3>₹320</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card pizza">
+
+            <img src="{{ url_for('static', filename='pizza4.jpg') }}">
+
+            <h2>Herb Chicken Pizza</h2>
+
+            <p>Fresh veggies with herb chicken</p>
+
+            <h3>₹420</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card pizza">
+
+            <img src="{{ url_for('static', filename='pizza5.jpg') }}">
+
+            <h2>Cheese Corn Pizza</h2>
+
+            <p>Sweet corn with delicious cheese</p>
+
+            <h3>₹350</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <!-- SNACKS -->
+
+        <div class="food-card snack">
+
+            <img src="{{ url_for('static', filename='fry1.jpg') }}">
+
+            <h2>French Fries</h2>
+
+            <p>Crispy golden fries</p>
+
+            <h3>₹90</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card snack">
+
+            <img src="{{ url_for('static', filename='fry2.jpg') }}">
+
+            <h2>Waffle Fries</h2>
+
+            <p>Crispy and textured</p>
+
+            <h3>₹190</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card snack">
+
+            <img src="{{ url_for('static', filename='fry3.jpg') }}">
+
+            <h2>Tater Tots</h2>
+
+            <p>Crunchy and delicious</p>
+
+            <h3>₹230</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card snack">
+
+            <img src="{{ url_for('static', filename='fry4.jpg') }}">
+
+            <h2>Garlic Fries</h2>
+
+            <p>Crispy garlic taste fries</p>
+
+            <h3>₹250</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card snack">
+
+            <img src="{{ url_for('static', filename='fry5.jpg') }}">
+
+            <h2>Cheese Balls</h2>
+
+            <p>Crispy and cheesy snack</p>
+
+            <h3>₹180</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <!-- DESSERTS -->
+
+        <div class="food-card dessert">
+
+            <img src="{{ url_for('static', filename='ch1.jpg') }}">
+
+            <h2>Chocolate Cake</h2>
+
+            <p>Soft and delicious chocolate cake</p>
+
+            <h3>₹350</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card dessert">
+
+            <img src="{{ url_for('static', filename='ch1.jpg') }}">
+
+            <h2>Rosewater Cake</h2>
+
+            <p>Soft and delicious rose cake</p>
+
+            <h3>₹200</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card dessert">
+
+            <img src="{{ url_for('static', filename='ch3.jpg') }}">
+
+            <h2>Black Forest Cake</h2>
+
+            <p>Soft and delicious cake</p>
+
+            <h3>₹250</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card dessert">
+
+            <img src="{{ url_for('static', filename='ch4.jpg') }}">
+
+            <h2>Butterscotch Cake</h2>
+
+            <p>Soft butterscotch flavour</p>
+
+            <h3>₹300</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+        <div class="food-card dessert">
+
+            <img src="{{ url_for('static', filename='ch5.jpg') }}">
+
+            <h2>Red Velvet Cake</h2>
+
+            <p>Soft cake with creamy frosting</p>
+
+            <h3>₹320</h3>
+
+            <button>Add to Cart</button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="menu-footer">
+
+        <h2>
+            THE BREWSTER ☕
+        </h2>
+
+        <p>
+            Fresh food • Great coffee • Good vibes
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        function filterMenu(category) {
+
+            let foods =
+                document.querySelectorAll(".food-card");
+
+            foods.forEach(function(food) {
+
+                if (category === "all") {
+
+                    food.style.display = "block";
+
+                }
+
+                else if (
+                    food.classList.contains(category)
+                ) {
+
+                    food.style.display = "block";
+
+                }
+
+                else {
+
+                    food.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        let cart =
+            JSON.parse(localStorage.getItem("cart")) || [];
+
+
+        let buttons =
+            document.querySelectorAll(".food-card button");
+
+
+        buttons.forEach(function(button) {
+
+            button.addEventListener("click", function() {
+
+                let card = button.parentElement;
+
+                let name =
+                    card.querySelector("h2").innerText;
+
+                let priceText =
+                    card.querySelector("h3").innerText;
+
+                let price =
+                    Number(
+                        priceText.replace("₹", "")
+                    );
+
+
+                let item = {
+
+                    name: name,
+                    price: price
+
+                };
+
+
+                cart.push(item);
+
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
+                );
+
+
+                alert(
+                    name + " added to cart!"
+                );
+
+            });
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BREWSTER</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #fff8f0;
+            color: #4b2612;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            width: 100%;
+            min-height: 75px;
+            background: rgba(75, 38, 18, 0.97);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand img {
+            width: 52px;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #f5c27a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-name {
+            color: white;
+            font-family: Georgia, serif;
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 9px 12px;
+            border-radius: 7px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #f5c27a;
+            transform: translateY(-2px);
+        }
+
+        .login-btn,
+        .signup-btn {
+            border: 1px solid #f5c27a;
+            border-radius: 7px;
+            padding: 8px 15px !important;
+        }
+
+        .login-btn:hover,
+        .signup-btn:hover {
+            background: #f5c27a !important;
+            color: #4b2612 !important;
+        }
+
+        .main {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            background: #1c0c06;
+        }
+
+        .main img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1.08);
+            display: block;
+            animation: zoom 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(1.08);
+            }
+            to {
+                transform: scale(1.16);
+            }
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(20, 7, 3, 0.78),
+                rgba(20, 7, 3, 0.35),
+                rgba(20, 7, 3, 0.15)
+            );
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            transform: translateY(-50%);
+            z-index: 2;
+            max-width: 600px;
+            animation: heroAppear 1s ease;
+        }
+
+        @keyframes heroAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-45%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%);
+            }
+        }
+
+        .small-title {
+            color: #f5c27a;
+            font-size: 17px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+        }
+
+        .main h1 {
+            color: white;
+            font-family: Georgia, serif;
+            font-size: 62px;
+            line-height: 1.08;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 10px black;
+        }
+
+        .hero-text {
+            color: #fff3e5;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .menu-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b4513, #c46b25);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 14px 30px;
+            border-radius: 9px;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            transition: 0.3s;
+        }
+
+        .menu-button:hover {
+            background: #4b2612;
+            border-color: #f5c27a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
+        }
+
+        .features-section {
+            padding: 75px 6%;
+            background: linear-gradient(180deg, #fff8f0, #f8eadc);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-heading span {
+            color: #a05218;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .section-heading h2 {
+            color: #4b2612;
+            font-family: Georgia, serif;
+            font-size: 38px;
+            margin-top: 8px;
+        }
+
+        .section-heading p {
+            color: #76533f;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 35px 25px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #ead3c0;
+            box-shadow: 0 10px 30px rgba(75, 38, 18, 0.1);
+            transition: 0.35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6b3519, #d28a4b, #6b3519);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 40px rgba(75, 38, 18, 0.18);
+            border-color: #c9946d;
+        }
+
+        .feature img {
+            width: 105px;
+            height: 105px;
+            object-fit: contain;
+            border-radius: 50%;
+            padding: 8px;
+            background: #fff4e8;
+            transition: 0.3s;
+        }
+
+        .feature:hover img {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .feature h2 {
+            color: #5a2d1a;
+            margin: 20px 0 8px;
+            font-size: 23px;
+        }
+
+        .feature p {
+            color: #76533f;
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .bottom-section {
+            padding: 65px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #4b2612, #7b3f00);
+            color: white;
+        }
+
+        .bottom-section h2 {
+            font-family: Georgia, serif;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .bottom-section p {
+            color: #f8dfc8;
+            margin-bottom: 25px;
+        }
+
+        .bottom-section a {
+            display: inline-block;
+            padding: 12px 27px;
+            background: #f5c27a;
+            color: #4b2612;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .bottom-section a:hover {
+            background: white;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 950px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 13px;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .main {
+                height: 530px;
+            }
+
+            .main h1 {
+                font-size: 48px;
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                min-height: auto;
+            }
+
+            .brand-name {
+                font-size: 20px;
+            }
+
+            .brand img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .nav-links {
+                gap: 2px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+                padding: 6px 5px;
+            }
+
+            .login-btn,
+            .signup-btn {
+                padding: 6px 8px !important;
+            }
+
+            .main {
+                height: 500px;
+            }
+
+            .hero-content {
+                left: 6%;
+                right: 6%;
+            }
+
+            .small-title {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+
+            .main h1 {
+                font-size: 36px;
+            }
+
+            .hero-text {
+                font-size: 15px;
+            }
+
+            .features-section {
+                padding: 55px 20px;
+            }
+
+            .section-heading h2 {
+                font-size: 30px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-section h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            <img src="{{ url_for('static', filename='ChatGPT Image Oct 3, 2026, 07_55_35 PM.png') }}" alt="The Brewster Logo">
+            <span class="brand-name">THE BREWSTER</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home_page') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('bill') }}">Order</a>
+            <a href="{{ url_for('gallery') }}">Gallery</a>
+            <a href="{{ url_for('cart') }}">Contact</a>
+            <a href="{{ url_for('login_page') }}" class="login-btn">Login</a>
+            <a href="{{ url_for('home') }}" class="signup-btn">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="main">
+        <img src="{{ url_for('static', filename='mainimage.png') }}" alt="The Brewster Cafe">
+
+        <div class="hero-content">
+            <div class="small-title">WELCOME TO THE BREWSTER</div>
+
+            <h1>
+                Good Food,<br>
+                Good Mood......
+            </h1>
+
+            <p class="hero-text">
+                Fresh food, delicious coffee and a relaxing
+                atmosphere — everything you need for a
+                perfect café experience.
+            </p>
+
+            <a href="{{ url_for('menu') }}" class="menu-button">
+                View Our Menu ☕
+            </a>
+        </div>
+    </div>
+
+    <section class="features-section">
+        <div class="section-heading">
+            <span>WHY CHOOSE US</span>
+            <h2>Made With Love ❤️</h2>
+            <p>
+                Everything at THE BREWSTER is made to make
+                your experience special.
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <img src="{{ url_for('static', filename='images.jpg') }}" alt="Delicious Food">
+                <h2>Delicious Food</h2>
+                <p>Fresh &amp; Healthy</p>
+            </div>
+
+            <div class="feature">
+                <img src="{{ url_for('static', filename='fast.webp') }}" alt="Fast Delivery">
+                <h2>Fast Delivery</h2>
+                <p>At Your DoorStep</p>
+            </div>
+
+            <div class="feature">
+                <img src="{{ url_for('static', filename='ambience.jpg') }}" alt="Best Ambience">
+                <h2>Best Ambience</h2>
+                <p>Relax And Enjoy</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bottom-section">
+        <h2>Hungry Already?</h2>
+        <p>
+            Discover your favourite food and coffee at THE BREWSTER.
+        </p>
+        <a href="{{ url_for('menu') }}">Explore Menu ☕</a>
+    </section>
+
+    <script>
+        fetch("/cart-status")
+            .then(response => response.json())
+            .then(data => {
+                if (data.clear_cart) {
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("total");
+                }
+            })
+            .catch(error => {
+                console.error("Unable to check cart status:", error);
+            });
+    </script>
+
+</body>
+</html>

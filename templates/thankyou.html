@@ -1,0 +1,374 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Thank You - The Brewster</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    rgba(40, 14, 9, 0.88),
+                    rgba(40, 14, 9, 0.92)
+                ),
+                url("{{ url_for('static', filename='mainimage.png') }}");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .thankyou-box {
+            width: 100%;
+            max-width: 600px;
+            background: #fffaf4;
+            border-radius: 28px;
+            overflow: hidden;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.5);
+
+            animation: appear 0.8s ease;
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        .top-section {
+            background: linear-gradient(
+                135deg,
+                #4b1e16,
+                #752828
+            );
+
+            padding: 35px 20px 40px;
+
+            color: white;
+
+            border-bottom: 4px solid #e5b878;
+        }
+
+        .coffee-icon {
+            width: 95px;
+            height: 95px;
+
+            margin: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 2px solid rgba(245, 194, 122, 0.7);
+
+            border-radius: 50%;
+
+            font-size: 50px;
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .top-section h1 {
+            margin: 20px 0 8px;
+
+            font-size: 38px;
+
+            letter-spacing: 2px;
+        }
+
+        .top-section p {
+            margin: 0;
+
+            color: #f5c27a;
+
+            font-size: 13px;
+
+            letter-spacing: 4px;
+        }
+
+        .content {
+            padding: 35px 30px 40px;
+        }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #e2f5e6;
+
+            border: 2px solid #b7dfc0;
+
+            border-radius: 50%;
+
+            color: #23833d;
+
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .content h2 {
+            margin: 0 0 12px;
+
+            color: #5a2d0c;
+
+            font-size: 27px;
+        }
+
+        .content .main-message {
+            color: #6b4228;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            margin: 0 auto 10px;
+
+            max-width: 470px;
+        }
+
+        .delivery-box {
+            margin: 25px auto;
+
+            max-width: 470px;
+
+            background: linear-gradient(
+                135deg,
+                #f7e8d7,
+                #fff1e2
+            );
+
+            border: 1px solid #e3c5a5;
+
+            border-radius: 17px;
+
+            padding: 18px 20px;
+        }
+
+        .delivery-box .emoji {
+            font-size: 30px;
+
+            margin-bottom: 5px;
+        }
+
+        .delivery-box h3 {
+            margin: 5px 0;
+
+            color: #752828;
+
+            font-size: 18px;
+        }
+
+        .delivery-box p {
+            margin: 0;
+
+            color: #8b6a55;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .heart-message {
+            color: #8b2e2e;
+
+            font-size: 15px;
+
+            margin: 25px 0;
+        }
+
+        .home-button {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: linear-gradient(
+                135deg,
+                #8b2e2e,
+                #b4473d
+            );
+
+            color: white;
+
+            padding: 14px 35px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 8px 20px rgba(139, 46, 46, 0.3);
+
+            transition: 0.3s;
+        }
+
+        .home-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 25px rgba(139, 46, 46, 0.4);
+        }
+
+        .footer {
+            background: #f3e2d0;
+
+            padding: 15px;
+
+            color: #795238;
+
+            font-size: 12px;
+        }
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .top-section {
+                padding: 28px 15px 32px;
+            }
+
+            .top-section h1 {
+                font-size: 31px;
+            }
+
+            .coffee-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 42px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .content h2 {
+                font-size: 23px;
+            }
+
+            .content .main-message {
+                font-size: 15px;
+            }
+
+            .home-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="thankyou-box">
+
+        <div class="top-section">
+
+            <div class="coffee-icon">
+                ☕
+            </div>
+
+            <h1>THE BREWSTER</h1>
+
+            <p>BREW • RELAX • ENJOY</p>
+
+        </div>
+
+
+        <div class="content">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>Thank You for Ordering!</h2>
+
+            <p class="main-message">
+                Your order has been placed successfully.
+                <br>
+                We are preparing something delicious just for you!
+            </p>
+
+
+            <div class="delivery-box">
+
+                <div class="emoji">
+                    🛵
+                </div>
+
+                <h3>Your Order is on the Way!</h3>
+
+                <p>
+                    Your delicious order will come to your
+                    doorstep soon. Sit back, relax and enjoy! ☕❤️
+                </p>
+
+            </div>
+
+
+            <div class="heart-message">
+                Thank you for choosing THE BREWSTER ❤️
+            </div>
+
+
+            <a href="{{ url_for('home_page') }}" class="home-button">
+                ← Back to Home
+            </a>
+
+        </div>
+
+
+        <div class="footer">
+            © 2026 THE BREWSTER • Freshly Brewed, Made With Love
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+```
